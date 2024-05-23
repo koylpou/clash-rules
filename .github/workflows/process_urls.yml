@@ -32,15 +32,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git remote set-url origin https://<koylpou>:${{ secrets.CONVERT }}@github.com/koylpou/clash-rules.git
           git add -A
           git commit -m "Update output files" -a
-        continue-on-error: true  # 如果没有变化导致提交失败，不会使整个工作流失败
-
-      - name: Push changes
-        run: |
-          git fetch
-          git push https://${{ secrets.CONVERT }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
-        env:
-          GIT_AUTHOR_EMAIL: action@github.com
-          GIT_COMMITTER_EMAIL: action@github.com
-        continue-on-error: true  # 如果没有变化导致推送失败，不会使整个工作流失败
+          git push
