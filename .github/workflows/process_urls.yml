@@ -24,9 +24,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install requests
-
-      - name: Change wrapper permissions
-        run: chmod +x scripts/convert_list.py
         
       - name: Run script
         run: python scripts/convert_list.py  # 运行你的Python脚本
@@ -37,4 +34,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git commit -m "Update output files" -a
-          git push
+          git diff --staged --quiet || (git commit -m "Update output files" && git push)
