@@ -1,13 +1,13 @@
-DOMAIN-KEYWORD,pttime
-DOMAIN-KEYWORD,hdfans
-DOMAIN-KEYWORD,haidan
-DOMAIN-KEYWORD,hddolby
-DOMAIN-KEYWORD,hdvideo
-DOMAIN-KEYWORD,ubits
-DOMAIN-KEYWORD,skyey
-DOMAIN-KEYWORD,m-team
-DOMAIN-SUFFIX,koylpou.top
-DOMAIN-SUFFIX,yamibo.com
-IP-CIDR,216.24.178.62/32,no-resolve
-DOMAIN-SUFFIX,chinaconstruction.com
-DOMAIN-SUFFIX,cscec.com
+- DOMAIN-KEYWORD,pttime
+- DOMAIN-KEYWORD,hdfans
+- DOMAIN-KEYWORD,haidan
+- DOMAIN-KEYWORD,hddolby
+- DOMAIN-KEYWORD,hdvideo
+- DOMAIN-KEYWORD,ubits
+- DOMAIN-KEYWORD,skyey
+- DOMAIN-KEYWORD,m-team
+- DOMAIN-SUFFIX,koylpou.top
+- DOMAIN-SUFFIX,yamibo.com
+- IP-CIDR,216.24.178.62/32,no-resolve
+- DOMAIN-SUFFIX,chinaconstruction.com
+- DOMAIN-SUFFIX,cscec.com
