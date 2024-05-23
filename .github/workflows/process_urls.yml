@@ -26,7 +26,7 @@ jobs:
         run: chmod +x scripts/convert_list.py
         
       - name: Run script
-        run: scripts/convert_list.py  # 运行你的Python脚本
+        run: python scripts/convert_list.py  # 运行你的Python脚本
 
       - name: Commit files
         run: |
