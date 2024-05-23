@@ -35,7 +35,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote set-url origin https://koylpou:${{ secrets.CONVERT }}@github.com/koylpou/clash-rules.git
           git add -A
           git commit -m "Update output files" -a
           git push
