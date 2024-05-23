@@ -2,9 +2,9 @@ import requests
 
 # URL列表和对应的输出文件名
 urls_and_files = [
-    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list", "GoogleCNProxyIP.list"),
-    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list", "LocalAreaNetwork.list"),
-    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list", "UnBan.list")
+    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list", "list/GoogleCNProxyIP.list"),
+    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list", "list/LocalAreaNetwork.list"),
+    ("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list", "list/UnBan.list")
 ]
 
 def add_prefix_to_lines_and_save(url, output_file):
