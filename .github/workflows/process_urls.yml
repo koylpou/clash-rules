@@ -23,7 +23,7 @@ jobs:
           pip install requests
 
       - name: Run script
-        run: scripts/convert list.py  # 运行你的Python脚本
+        run: scripts/convert_list.py  # 运行你的Python脚本
 
       - name: Commit files
         run: |
