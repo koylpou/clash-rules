@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 * * * *'  # 每小时运行一次
 
+permissions:
+  contents: write
+
 jobs:
   process_urls:
     runs-on: ubuntu-latest
