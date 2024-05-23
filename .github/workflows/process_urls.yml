@@ -35,3 +35,4 @@ jobs:
           git add -A
           git commit -m "Update output files" -a
           git push
+        continue-on-error: true  # 如果没有变化导致推送失败，不会使整个工作流失败
