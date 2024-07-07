@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "koylpou.top",
+        "yamibo.com",
+        "chinaconstruction.com",
+        "cscec.com"
+      ],
+      "ip_cidr": [
+        "173.242.112.18/32"
+      ],
+      "domain_keyword": [
+        "pttime",
+        "hdfans",
+        "haidan",
+        "hddolby",
+        "hdvideo",
+        "ubits",
+        "skyey",
+        "m-team"
+      ]
+    }
+  ]
+}
