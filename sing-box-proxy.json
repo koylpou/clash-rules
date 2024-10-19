@@ -3,7 +3,8 @@
   "rules": [
     {
       "domain": [
-        "hi77-overseas.mangafuna.xyz"
+        "hi77-overseas.mangafuna.xyz",
+        "img-s.msn.cn"
       ]
     }
   ]
