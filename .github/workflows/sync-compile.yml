@@ -38,8 +38,9 @@ jobs:
         rm -rf sing-box sing-box-${SING_BOX_VERSION}-linux-amd64 sing-box.tar.gz
         find . -type f -name "*.srs" -exec rm -f {} \;
         find . -type f -name "*.json" -exec bash -c '
-        echo "Compiling: $1"
-        if ! sing-box rule-set compile "$1"; then
+        srs_file="${1%.json}.srs"
+        echo "Compiling: $1 to $srs_file"
+        if ! sing-box rule-set compile --output "$srs_file" "$1"; then
           echo "Error compiling $1"
           exit 1
         fi
@@ -49,5 +50,6 @@ jobs:
           echo "No changes to commit"
           echo "No updates needed"
         else
+          git commit -m "Update compiled .srs files"
           git push
         fi
