@@ -44,4 +44,10 @@ jobs:
           exit 1
         fi
         ' _ {} \;
-        git push
+        git add .
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+          echo "No updates needed"
+        else
+          git push
+        fi
