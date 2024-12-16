@@ -44,4 +44,4 @@ jobs:
           exit 1
         fi
         ' _ {} \;
-        git add .
+        git push
