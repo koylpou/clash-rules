@@ -16,6 +16,9 @@
       ],
       "domain_suffix": [
         "koylpou.top"
+      ],
+      "process_name": [
+        "tailscaled"
       ]
     }
   ]
