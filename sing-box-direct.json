@@ -11,10 +11,9 @@
         "hddolby",
         "hdvideo",
         "ubits",
-        "skyey"
-      ],
-      "domain_suffix": [
-        "koylpou.top"
+        "skyey",
+        "tailscale",
+        "koylpou"
       ],
       "process_name": [
         "tailscaled"
