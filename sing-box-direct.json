@@ -15,9 +15,6 @@
         "skyey",
         "tailscale",
         "koylpou"
-      ],
-      "process_name": [
-        "tailscaled"
       ]
     }
   ]
