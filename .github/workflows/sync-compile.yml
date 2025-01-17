@@ -38,7 +38,7 @@ jobs:
         git remote add ruleset https://github.com/gaoyifan/china-operator-ip
         git fetch ruleset
         git checkout ruleset/ip-lists -- china.txt china6.txt
-        cat china.txt china6.txt | awk '{print "\"" $0 "\""}' | awk 'NR > 1 { print line "," } { line = $0 } END { print line }' > formatted.txt
+        cat china.txt china6.txt > formatted.txt
         jq -n --rawfile data formatted.txt '{"version": 2, "rules": [{"ip_cidr": [$data | split("\n") | .[] | select(length > 0)]}]}' > geoip-cn.json
     
     - name: Compile Sing-Box Rules from ruleset
