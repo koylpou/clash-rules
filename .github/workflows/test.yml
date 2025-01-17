@@ -26,6 +26,7 @@ jobs:
       run: |
         git remote add ruleset https://github.com/gaoyifan/china-operator-ip
         git fetch ruleset
+        rm -f china.txt china6.txt
         git checkout ruleset/ip-lists -- china.txt china6.txt
         git add .
         git push
