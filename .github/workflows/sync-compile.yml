@@ -40,6 +40,7 @@ jobs:
         git checkout ruleset/ip-lists -- china.txt china6.txt
         cat china.txt china6.txt > formatted.txt
         jq -n --rawfile data formatted.txt '{"version": 2, "rules": [{"ip_cidr": [$data | split("\n") | .[] | select(length > 0)]}]}' > geoip-cn.json
+        rm -f china.txt china6.txt formatted.txt
     
     - name: Compile Sing-Box Rules from ruleset
       run: |
