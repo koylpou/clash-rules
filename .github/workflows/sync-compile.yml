@@ -102,6 +102,7 @@ jobs:
               ]
             }]
           }' > logical-dns-direct.json
+        rm -f geolocation-!cn.json geosite-cn geosite-category-companies@cn.json geosite-steam@cn.json temp_geolocation-!cn_domain.json temp_geolocation-!cn_domain_suffix.json temp_geolocation-!cn_domain_regex.json temp_geosite-cn_domain_suffix.json temp_geosite-category-companies@cn_domain.json temp_geosite-category-companies@cn_domain_suffix.json temp_geosite-category-companies@cn_domain_regex temp_geosite-steam@cn_domain.json temp_geosite-steam@cn_domain_suffix.json temp_ip_cidr.json
     
     - name: Compile Sing-Box Rules from ruleset
       run: |
