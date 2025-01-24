@@ -68,15 +68,15 @@ jobs:
               mode: "and",
               rules: [
                 {
-                  domain: $a[0].rules[0].domain,
-                  domain_suffix: $a[0].rules[0].domain_suffix,
-                  domain_regex: $a[0].rules[0].domain_regex,
+                  domain: ($a[0].rules[0].domain | if type == "string" then [.] else . end),
+                  domain_suffix: ($a[0].rules[0].domain_suffix | if type == "string" then [.] else . end),
+                  domain_regex: ($a[0].rules[0].domain_regex | if type == "string" then [.] else . end),
                   invert: true
                 },
                 {
-                  domain: (($c[0].rules[0].domain | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain | if type != "array" then [.[]] else . end)),
-                  domain_suffix: (($b[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end) + ($c[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end)),
-                  domain_regex: (($c[0].rules[0].domain_regex | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain_regex | if type != "array" then [.[]] else . end)),
+                  domain: (($c[0].rules[0].domain | if type == "string" then [.] else . end) + ($d[0].rules[0].domain | if type == "string" then [.] else . end)),
+                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
+                  domain_regex: (($c[0].rules[0].domain_regex | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_regex | if type == "string" then [.] else . end)),
                   ip_cidr: $e[0].rules[0].ip_cidr
                 }
               ]
@@ -89,15 +89,15 @@ jobs:
               mode: "and",
               rules: [
                 {
-                  domain: $a[0].rules[0].domain,
-                  domain_suffix: $a[0].rules[0].domain_suffix,
-                  domain_regex: $a[0].rules[0].domain_regex,
+                  domain: ($a[0].rules[0].domain | if type == "string" then [.] else . end),
+                  domain_suffix: ($a[0].rules[0].domain_suffix | if type == "string" then [.] else . end),
+                  domain_regex: ($a[0].rules[0].domain_regex | if type == "string" then [.] else . end),
                   invert: true
                 },
                 {
-                  domain: (($c[0].rules[0].domain | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain | if type != "array" then [.[]] else . end)),
-                  domain_suffix: (($b[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end) + ($c[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain_suffix | if type != "array" then [.[]] else . end)),
-                  domain_regex: (($c[0].rules[0].domain_regex | if type != "array" then [.[]] else . end) + ($d[0].rules[0].domain_regex | if type != "array" then [.[]] else . end))
+                  domain: (($c[0].rules[0].domain | if type == "string" then [.] else . end) + ($d[0].rules[0].domain | if type == "string" then [.] else . end)),
+                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
+                  domain_regex: (($c[0].rules[0].domain_regex | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_regex | if type == "string" then [.] else . end))
                 }
               ]
             }]
