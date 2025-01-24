@@ -42,6 +42,67 @@ jobs:
         jq -n --rawfile data formatted.txt '{"version": 2, "rules": [{"ip_cidr": [$data | split("\n") | .[] | select(length > 0)]}]}' > geoip-cn.json
         rm -f china.txt china6.txt formatted.txt
     
+    - name: Download ruleset
+      run: |
+        curl -o geolocation-!cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/geolocation-!cn.json
+        curl -o geosite-cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/cn.json
+        curl -o geosite-category-companies@cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-companies@cn.json
+        curl -o geosite-steam@cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/steam@cn.json
+    
+    - name: Combine rulesets and write to second-last-rule.json
+      run: |
+        jq -c '.rules[0].domain' geolocation-!cn.json > temp_geolocation-!cn_domain.json
+        jq -c '.rules[0].domain_suffix' geolocation-!cn.json > temp_geolocation-!cn_domain_suffix.json
+        jq -c '.rules[0].domain_regex' geolocation-!cn.json > temp_geolocation-!cn_domain_regex.json
+        jq -c '.rules[0].domain_suffix' geosite-cn.json > temp_geosite-cn_domain_suffix.json
+        jq -c '.rules[0].domain' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain.json
+        jq -c '.rules[0].domain_suffix' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain_suffix.json
+        jq -c '.rules[0].domain_regex' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain_regex.json
+        jq -c '.rules[0].domain' geosite-steam@cn.json > temp_geosite-steam@cn_domain.json
+        jq -c '.rules[0].domain_suffix' geosite-steam@cn.json > temp_geosite-steam@cn_domain_suffix.json
+        jq -c '.rules[0].ip_cidr' geoip-cn.json > temp_ip_cidr.json
+        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json --slurpfile d geosite-steam@cn.json --slurpfile e geoip-cn.json '{
+            version: 1,
+            rules: [{
+              type: "logical",
+              mode: "and",
+              rules: [
+                {
+                  domain: $a[0].rules[0].domain,
+                  domain_suffix: $a[0].rules[0].domain_suffix,
+                  domain_regex: $a[0].rules[0].domain_regex,
+                  invert: true
+                },
+                {
+                  domain: ($c[0].rules[0].domain + $d[0].rules[0].domain),
+                  domain_suffix: ($b[0].rules[0].domain_suffix + $c[0].rules[0].domain_suffix + $d[0].rules[0].domain_suffix),
+                  domain_regex: ($c[0].rules[0].domain_regex + $d[0].rules[0].domain_regex),
+                  ip_cidr: $e[0].rules[0].ip_cidr
+                }
+              ]
+            }]
+          }' > logical-route-direct.json
+        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json --slurpfile d geosite-steam@cn.json '{
+            version: 1,
+            rules: [{
+              type: "logical",
+              mode: "and",
+              rules: [
+                {
+                  domain: $a[0].rules[0].domain,
+                  domain_suffix: $a[0].rules[0].domain_suffix,
+                  domain_regex: $a[0].rules[0].domain_regex,
+                  invert: true
+                },
+                {
+                  domain: ($c[0].rules[0].domain + $d[0].rules[0].domain),
+                  domain_suffix: ($b[0].rules[0].domain_suffix + $c[0].rules[0].domain_suffix + $d[0].rules[0].domain_suffix),
+                  domain_regex: ($c[0].rules[0].domain_regex + $d[0].rules[0].domain_regex),
+                }
+              ]
+            }]
+          }' > logical-dns-direct.json
+    
     - name: Compile Sing-Box Rules from ruleset
       run: |
         rm -rf sing-box sing-box-${SING_BOX_VERSION}-linux-amd64 sing-box.tar.gz
