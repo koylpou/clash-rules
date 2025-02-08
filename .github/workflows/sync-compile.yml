@@ -47,7 +47,6 @@ jobs:
         curl -o geolocation-!cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/geolocation-!cn.json
         curl -o geosite-cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/cn.json
         curl -o geosite-category-companies@cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-companies@cn.json
-        curl -o geosite-steam@cn.json https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/steam@cn.json
     
     - name: Combine rulesets and write to second-last-rule.json
       run: |
@@ -58,10 +57,8 @@ jobs:
         jq -c '.rules[0].domain' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain.json
         jq -c '.rules[0].domain_suffix' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain_suffix.json
         jq -c '.rules[0].domain_regex' geosite-category-companies@cn.json > temp_geosite-category-companies@cn_domain_regex.json
-        jq -c '.rules[0].domain' geosite-steam@cn.json > temp_geosite-steam@cn_domain.json
-        jq -c '.rules[0].domain_suffix' geosite-steam@cn.json > temp_geosite-steam@cn_domain_suffix.json
         jq -c '.rules[0].ip_cidr' geoip-cn.json > temp_ip_cidr.json
-        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json --slurpfile d geosite-steam@cn.json --slurpfile e geoip-cn.json '{
+        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json --slurpfile d geoip-cn.json '{
             version: 1,
             rules: [{
               type: "logical",
@@ -74,15 +71,15 @@ jobs:
                   invert: true
                 },
                 {
-                  domain: (($c[0].rules[0].domain | if type == "string" then [.] else . end) + ($d[0].rules[0].domain | if type == "string" then [.] else . end)),
-                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
-                  domain_regex: (($c[0].rules[0].domain_regex | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_regex | if type == "string" then [.] else . end)),
-                  ip_cidr: $e[0].rules[0].ip_cidr
+                  domain: ($c[0].rules[0].domain | if type == "string" then [.] else . end),
+                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
+                  domain_regex: ($c[0].rules[0].domain_regex | if type == "string" then [.] else . end),
+                  ip_cidr: $d[0].rules[0].ip_cidr
                 }
               ]
             }]
           }' > logical-route-direct.json
-        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json --slurpfile d geosite-steam@cn.json '{
+        jq -n --slurpfile a geolocation-!cn.json --slurpfile b geosite-cn.json --slurpfile c geosite-category-companies@cn.json '{
             version: 1,
             rules: [{
               type: "logical",
@@ -95,14 +92,14 @@ jobs:
                   invert: true
                 },
                 {
-                  domain: (($c[0].rules[0].domain | if type == "string" then [.] else . end) + ($d[0].rules[0].domain | if type == "string" then [.] else . end)),
-                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
-                  domain_regex: (($c[0].rules[0].domain_regex | if type == "string" then [.] else . end) + ($d[0].rules[0].domain_regex | if type == "string" then [.] else . end))
+                  domain: ($c[0].rules[0].domain | if type == "string" then [.] else . end),
+                  domain_suffix: (($b[0].rules[0].domain_suffix | if type == "string" then [.] else . end) + ($c[0].rules[0].domain_suffix | if type == "string" then [.] else . end)),
+                  domain_regex: ($c[0].rules[0].domain_regex | if type == "string" then [.] else . end)
                 }
               ]
             }]
           }' > logical-dns-direct.json
-        rm -f geolocation-!cn.json geosite-cn.json geosite-category-companies@cn.json geosite-steam@cn.json temp_geolocation-!cn_domain.json temp_geolocation-!cn_domain_suffix.json temp_geolocation-!cn_domain_regex.json temp_geosite-cn_domain_suffix.json temp_geosite-category-companies@cn_domain.json temp_geosite-category-companies@cn_domain_suffix.json temp_geosite-category-companies@cn_domain_regex.json temp_geosite-steam@cn_domain.json temp_geosite-steam@cn_domain_suffix.json temp_ip_cidr.json
+        rm -f geolocation-!cn.json geosite-cn.json geosite-category-companies@cn.json temp_geolocation-!cn_domain.json temp_geolocation-!cn_domain_suffix.json temp_geolocation-!cn_domain_regex.json temp_geosite-cn_domain_suffix.json temp_geosite-category-companies@cn_domain.json temp_geosite-category-companies@cn_domain_suffix.json temp_geosite-category-companies@cn_domain_regex.json temp_ip_cidr.json
     
     - name: Compile Sing-Box Rules from ruleset
       run: |
