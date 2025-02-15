@@ -39,7 +39,8 @@
         "yamibo"
       ],
       "domain_suffix": [
-        "cm.steampowered.com"
+        "cm.steampowered.com",
+        "steamserver.net"
       ]
     }
   ]
