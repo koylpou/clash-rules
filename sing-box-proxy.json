@@ -2,11 +2,7 @@
   "version": 2,
   "rules": [
     {
-      "domain": [
-        "hi77-overseas.mangafuna.xyz"
-      ],
       "domain_suffix": [
-        "mangafuna.xyz",
         "static.m-team.cc",
         "steamcommunity.com",
         "steampowered.com",
