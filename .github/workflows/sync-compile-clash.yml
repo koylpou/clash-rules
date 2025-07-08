@@ -1,0 +1,70 @@
+name: Generate Mihomo Rulesets
+
+on:
+  push:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+
+env:
+  MIHOMO_VERSION: 1.19.11
+  OUTPUT_DIR: "clash"
+
+jobs:
+  generate_rulesets:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
+    - name: Set up Git user
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Install Mihomo
+      run: |
+        curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v${MIHOMO_VERSION}/mihomo-linux-amd64-v${MIHOMO_VERSION}.gz
+        gzip -d mihomo.gz
+        chmod +x mihomo
+        sudo mv mihomo /usr/local/bin/mihomo
+        mihomo --version
+
+    - name: Fetch China IP lists
+      run: |
+        git remote add ruleset https://github.com/gaoyifan/china-operator-ip
+        git fetch ruleset
+        git checkout ruleset/ip-lists -- china.txt china6.txt
+        cat china.txt china6.txt | grep -v '^#' | grep -v '^$' > ${{ env.OUTPUT_DIR }}/ip_cn.list
+        rm -f china.txt china6.txt
+
+    - name: Download raw rulesets
+      run: |
+        curl -o domain_cn.list https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.list
+        curl -o geolocation_not_cn.list https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.list
+        curl -o company_cn.list https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-companies@cn.list
+
+    - name: Convert to Mihomo ruleset format
+      run: |   
+        # Create combined ruleset
+        cat domain_cn.list company_cn.list | sort | uniq > merged_cn.list
+        grep -v -F -x -f geolocation_not_cn.list merged_cn.list > ${{ env.OUTPUT_DIR }}/logical_domain_cn.list
+        rm domain_cn.list geolocation_not_cn.list company_cn.list merged_cn.list
+        
+        # Convert IP rules
+        mihomo convert-ruleset ipcidr text ${{ env.OUTPUT_DIR }}/ip_cn.list ${{ env.OUTPUT_DIR }}/ip_cn.mrs
+        mihomo convert-ruleset domain text ${{ env.OUTPUT_DIR }}/logical_domain_cn.list ${{ env.OUTPUT_DIR }}/logical_domain_cn.mrs
+
+    - name: Commit and push changes
+      run: |
+        git add ${{ env.OUTPUT_DIR }}/
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update Mihomo rulesets"
+          git push
+        fi
