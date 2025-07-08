@@ -32,7 +32,7 @@ jobs:
         gzip -d mihomo.gz
         chmod +x mihomo
         sudo mv mihomo /usr/local/bin/mihomo
-        mihomo --version
+        mihomo -v
 
     - name: Fetch China IP lists
       run: |
