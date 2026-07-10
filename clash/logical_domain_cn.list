@@ -91481,6 +91481,7 @@
 +.twty.vip
 +.twwtn.com
 +.twyuxin.com
++.twyxh.com
 +.twyxi.com
 +.twz1t32lzy.com
 +.twzilla.com
@@ -111718,6 +111719,7 @@
 +.zwzyzx.com
 +.zx-tour.com
 +.zx-xcx.com
++.zx.com
 +.zx0093.com
 +.zx017.com
 +.zx017.net
@@ -112217,6 +112219,7 @@ amp-api-updates.apps.apple.com
 amp-api.apps.apple.com
 amp-api.media.apple.com
 amp-api.music.apple.com
+amp-api.podcasts.apple.com
 aod-ssl.itunes.apple.com
 aod.itunes.apple.com
 api-edge.apps.apple.com
@@ -112231,7 +112234,6 @@ appleid.cdn-apple.com
 apps.mzstatic.com
 apps5.oingo.com
 apptrailers.itunes.apple.com
-auth.music.apple.com
 avail.googleflights.net
 azuremigrate.download.prss.microsoft.com
 azuremigratetest.download.prss.microsoft.com
@@ -112568,6 +112570,8 @@ performanceparameters.googleapis.com
 pki-goog.l.google.com
 play.itunes.apple.com
 play.music.apple.com
+podcasts.apple.com
+podcasts.itunes.apple.com
 probe.siri.apple.com
 prod-controlbe.floonet.goog
 prod-databe.floonet.goog
